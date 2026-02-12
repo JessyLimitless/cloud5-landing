@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cloud5 — Deploy in seconds</title>
-<meta name="description" content="Deploy your GitHub repos to production in seconds. No Docker, no CI/CD, no config files.">
+<title>Cloud5 — GitHub URL 하나면 끝 | 한국 최초 원클릭 배포</title>
+<meta name="description" content="서버 설정 없이 GitHub URL만 입력하면 30초 안에 배포. 20+ 언어 자동 감지, 자동 HTTPS, 한국 리전. 무료로 시작하세요.">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cloud5 — Deploy in seconds">
+<meta property="og:description" content="GitHub URL 하나면 끝. 한국 최초 원클릭 자동배포 플랫폼. 무료로 시작하세요.">
+<meta property="og:image" content="https://deployme.socialbrain.co.kr/og-image.png">
+<meta property="og:url" content="https://deployme.socialbrain.co.kr">
+<meta property="og:site_name" content="Cloud5">
+<meta property="og:locale" content="ko_KR">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cloud5 — Deploy in seconds">
+<meta name="twitter:description" content="GitHub URL 하나면 끝. 한국 최초 원클릭 자동배포 플랫폼.">
+<meta name="twitter:image" content="https://deployme.socialbrain.co.kr/og-image.png">
+
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,6 +35,7 @@
   --blue-light: #eff6ff;
   --blue-subtle: #dbeafe;
   --green: #22c55e;
+  --accent: #8b5cf6;
   --text: #0f172a;
   --text-secondary: #334155;
   --text-sub: #64748b;
@@ -35,691 +53,157 @@ body {
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
 /* ========== NAV ========== */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  height: 60px;
-  padding: 0 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  height: 60px; padding: 0 32px;
+  display: flex; justify-content: space-between; align-items: center;
   background: rgba(255,255,255,0.85);
   backdrop-filter: blur(16px) saturate(180%);
   border-bottom: 1px solid var(--border);
 }
-
-.nav-inner {
-  max-width: 1100px;
-  width: 100%;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-weight: 700;
-  font-size: 1.05rem;
-  color: var(--text);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  letter-spacing: -0.3px;
-}
-
-.logo-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--blue);
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.nav-links a {
-  font-size: 0.82rem;
-  font-weight: 400;
-  color: var(--text-sub);
-  text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  transition: color 0.15s, background 0.15s;
-}
-
-.nav-links a:hover {
-  color: var(--text);
-  background: var(--bg-soft);
-}
-
-.nav-cta {
-  padding: 7px 18px !important;
-  background: var(--blue) !important;
-  color: #fff !important;
-  font-weight: 500 !important;
-  border-radius: 7px !important;
-  transition: background 0.15s !important;
-}
-
-.nav-cta:hover {
-  background: var(--blue-dark) !important;
-  color: #fff !important;
-}
+.nav-inner { max-width: 1100px; width: 100%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.logo { font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px; }
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.nav-links { display: flex; align-items: center; gap: 6px; }
+.nav-links a { font-size: 0.82rem; font-weight: 400; color: var(--text-sub); text-decoration: none; padding: 6px 14px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
+.nav-links a:hover { color: var(--text); background: var(--bg-soft); }
+.nav-cta { padding: 7px 18px !important; background: var(--blue) !important; color: #fff !important; font-weight: 500 !important; border-radius: 7px !important; transition: background 0.15s !important; }
+.nav-cta:hover { background: var(--blue-dark) !important; color: #fff !important; }
 
 /* ========== HERO ========== */
 .hero {
-  background: var(--bg);
+  background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 50%, #fdf4ff 100%);
   padding: 150px 24px 100px;
   text-align: center;
   position: relative;
 }
-
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 60px; left: 50%; transform: translateX(-50%);
-  width: 800px; height: 500px;
-  background: radial-gradient(ellipse at center, rgba(59,130,246,0.06) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.hero-inner {
-  max-width: 680px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
+.hero-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
 .hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 14px 5px 10px;
-  background: var(--blue-light);
-  border: 1px solid var(--blue-subtle);
-  border-radius: 100px;
-  font-size: 0.78rem;
-  font-weight: 500;
-  color: var(--blue);
-  margin-bottom: 28px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px 5px 10px; background: var(--bg); border: 1px solid var(--blue-subtle);
+  border-radius: 100px; font-size: 0.78rem; font-weight: 500; color: var(--blue); margin-bottom: 28px;
 }
-
-.hero-badge-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--blue);
-  animation: pulse-dot 2s infinite;
-}
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-.hero h1 {
-  font-size: 3.6rem;
-  font-weight: 800;
-  letter-spacing: -2px;
-  line-height: 1.08;
-  color: var(--text);
-  margin-bottom: 20px;
-}
-
-.hero h1 .accent {
-  color: var(--blue);
-}
-
-.hero p {
-  font-size: 1.12rem;
-  font-weight: 300;
-  color: var(--text-sub);
-  line-height: 1.7;
-  margin-bottom: 40px;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-btns {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-.btn-primary {
-  padding: 13px 32px;
-  background: var(--blue);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  font-family: var(--font);
-  cursor: pointer;
-  text-decoration: none;
-  transition: background 0.15s, transform 0.15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); animation: pulse-dot 2s infinite; }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hero h1 { font-size: 3.6rem; font-weight: 800; letter-spacing: -2px; line-height: 1.08; color: var(--text); margin-bottom: 20px; }
+.hero h1 .accent { background: linear-gradient(135deg, var(--blue), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero p { font-size: 1.12rem; font-weight: 300; color: var(--text-sub); line-height: 1.7; margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
+.hero-btns { display: flex; gap: 12px; justify-content: center; }
+.hero-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
+.btn-primary { padding: 13px 32px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; font-family: var(--font); cursor: pointer; text-decoration: none; transition: background 0.15s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px; }
 .btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
-
-.btn-secondary {
-  padding: 13px 32px;
-  background: var(--bg);
-  color: var(--text-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  font-family: var(--font);
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.15s, color 0.15s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.btn-secondary:hover {
-  color: var(--blue);
-  border-color: var(--blue);
-}
+.btn-secondary { padding: 13px 32px; background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; font-weight: 500; font-family: var(--font); cursor: pointer; text-decoration: none; transition: border-color 0.15s, color 0.15s; display: inline-flex; align-items: center; gap: 8px; }
+.btn-secondary:hover { color: var(--blue); border-color: var(--blue); }
 
 /* ========== DEMO ========== */
-.demo-section {
-  background: var(--bg);
-  padding: 0 24px 100px;
-}
-
-.demo-window {
-  max-width: 700px;
-  margin: 0 auto;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-  background: var(--bg);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02);
-}
-
-.demo-bar {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  padding: 14px 18px;
-  background: var(--bg-soft);
-  border-bottom: 1px solid var(--border);
-}
-
+.demo-section { background: var(--bg); padding: 0 24px 100px; }
+.demo-window { max-width: 700px; margin: 0 auto; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg); box-shadow: 0 8px 32px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02); }
+.demo-bar { display: flex; align-items: center; gap: 7px; padding: 14px 18px; background: var(--bg-soft); border-bottom: 1px solid var(--border); }
 .d-dot { width: 10px; height: 10px; border-radius: 50%; }
-.d-r { background: #ff5f57; }
-.d-y { background: #febc2e; }
-.d-g { background: #28c840; }
-
-.demo-url {
-  margin-left: 16px;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--text-muted);
-}
-
+.d-r { background: #ff5f57; } .d-y { background: #febc2e; } .d-g { background: #28c840; }
+.demo-url { margin-left: 16px; font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); }
 .demo-body { padding: 24px; }
-
-.demo-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.demo-logo {
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
+.demo-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.demo-logo { font-weight: 700; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 7px; }
 .demo-logo-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
-
-.demo-deploy-btn {
-  padding: 6px 16px;
-  background: var(--blue);
-  color: #fff;
-  border-radius: 6px;
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
+.demo-deploy-btn { padding: 6px 16px; background: var(--blue); color: #fff; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
 .demo-list { display: flex; flex-direction: column; gap: 8px; }
-
-.demo-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 16px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: border-color 0.15s;
-}
-
+.demo-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.15s; }
 .demo-item:hover { border-color: #cbd5e1; }
-
-.demo-name {
-  font-weight: 500;
-  font-size: 0.85rem;
-  color: var(--blue);
-}
-
-.demo-id {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  margin-top: 3px;
-}
-
-.demo-status {
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--green);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.demo-status::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green);
-}
+.demo-name { font-weight: 500; font-size: 0.85rem; color: var(--blue); }
+.demo-id { font-family: var(--mono); font-size: 0.68rem; color: var(--text-muted); margin-top: 3px; }
+.demo-status { font-size: 0.75rem; font-weight: 500; color: var(--green); display: flex; align-items: center; gap: 6px; }
+.demo-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
 
 /* ========== SECTION SHARED ========== */
-.section-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  color: var(--blue);
-  margin-bottom: 12px;
-}
-
-.section-title {
-  font-size: 2.2rem;
-  font-weight: 700;
-  letter-spacing: -1px;
-  line-height: 1.2;
-  color: var(--text);
-  margin-bottom: 12px;
-}
-
-.section-desc {
-  font-size: 1rem;
-  font-weight: 300;
-  color: var(--text-sub);
-  line-height: 1.7;
-  max-width: 520px;
-}
+.section-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--blue); margin-bottom: 12px; }
+.section-title { font-size: 2.2rem; font-weight: 700; letter-spacing: -1px; line-height: 1.2; color: var(--text); margin-bottom: 12px; }
+.section-desc { font-size: 1rem; font-weight: 300; color: var(--text-sub); line-height: 1.7; max-width: 520px; }
 
 /* ========== STEPS ========== */
-.steps-section {
-  padding: 100px 24px;
-  background: var(--bg-section);
-}
-
-.steps-inner {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.steps-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
+.steps-section { padding: 100px 24px; background: var(--bg-section); }
+.steps-inner { max-width: 960px; margin: 0 auto; }
+.steps-header { text-align: center; margin-bottom: 60px; }
 .steps-header .section-desc { margin: 0 auto; }
-
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.step-card {
-  text-align: center;
-  padding: 32px 24px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-}
-
-.step-num-ring {
-  width: 48px; height: 48px;
-  border-radius: 12px;
-  background: var(--blue-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--blue);
-  margin: 0 auto 18px;
-}
-
-.step-card h3 {
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: -0.3px;
-}
-
-.step-card p {
-  font-size: 0.85rem;
-  font-weight: 300;
-  color: var(--text-sub);
-  line-height: 1.6;
-}
+.steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.step-card { text-align: center; padding: 32px 24px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; }
+.step-num-ring { width: 48px; height: 48px; border-radius: 12px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 700; color: var(--blue); margin: 0 auto 18px; }
+.step-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.3px; }
+.step-card p { font-size: 0.85rem; font-weight: 300; color: var(--text-sub); line-height: 1.6; }
 
 /* ========== FEATURES ========== */
-.features-section {
-  padding: 100px 24px;
-  background: var(--bg);
-}
-
-.features-inner {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.features-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
+.features-section { padding: 100px 24px; background: var(--bg); }
+.features-inner { max-width: 960px; margin: 0 auto; }
+.features-header { text-align: center; margin-bottom: 60px; }
 .features-header .section-desc { margin: 0 auto; }
+.feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.feat-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; transition: border-color 0.2s, box-shadow 0.2s; }
+.feat-card:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
+.feat-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 16px; }
+.feat-card h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.2px; }
+.feat-card p { font-size: 0.84rem; font-weight: 300; color: var(--text-sub); line-height: 1.6; }
 
-.feat-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-.feat-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 28px 24px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.feat-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-.feat-icon {
-  width: 40px; height: 40px;
-  border-radius: 10px;
-  background: var(--blue-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  margin-bottom: 16px;
-}
-
-.feat-card h4 {
-  font-size: 0.92rem;
-  font-weight: 600;
-  margin-bottom: 8px;
-  letter-spacing: -0.2px;
-}
-
-.feat-card p {
-  font-size: 0.84rem;
-  font-weight: 300;
-  color: var(--text-sub);
-  line-height: 1.6;
-}
+/* ========== COMPARISON ========== */
+.compare-section { padding: 100px 24px; background: var(--bg-section); }
+.compare-inner { max-width: 800px; margin: 0 auto; }
+.compare-header { text-align: center; margin-bottom: 60px; }
+.compare-header .section-desc { margin: 0 auto; }
+.compare-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg); }
+.compare-table th { background: var(--bg-soft); font-size: 0.82rem; font-weight: 600; color: var(--text); padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+.compare-table td { font-size: 0.82rem; color: var(--text-secondary); padding: 12px 18px; border-bottom: 1px solid var(--border-light); }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { font-weight: 500; color: var(--text); }
+.compare-highlight { background: var(--blue-light); }
+.compare-highlight th { background: var(--blue-subtle); color: var(--blue-dark); }
+.check { color: var(--green); font-weight: 700; }
+.cross { color: var(--text-muted); }
 
 /* ========== PRICING ========== */
-.pricing-section {
-  padding: 100px 24px;
-  background: var(--bg-section);
-}
-
-.pricing-inner {
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.pricing-header {
-  text-align: center;
-  margin-bottom: 60px;
-}
-
+.pricing-section { padding: 100px 24px; background: var(--bg); }
+.pricing-inner { max-width: 960px; margin: 0 auto; }
+.pricing-header { text-align: center; margin-bottom: 60px; }
 .pricing-header .section-desc { margin: 0 auto; }
-
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  align-items: start;
-}
-
-.price-card {
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 32px 28px;
-  position: relative;
-  background: var(--bg);
-  transition: box-shadow 0.2s;
-}
-
-.price-card:hover {
-  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-}
-
-.price-card.featured {
-  border-color: var(--blue);
-  box-shadow: 0 0 0 1px var(--blue), 0 8px 24px rgba(59,130,246,0.08);
-}
-
-.price-badge {
-  position: absolute;
-  top: -11px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 3px 14px;
-  background: var(--blue);
-  color: #fff;
-  border-radius: 100px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-.price-name {
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 4px;
-}
-
-.price-amount {
-  font-size: 2.4rem;
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  margin-bottom: 4px;
-}
-
-.price-amount span {
-  font-size: 0.9rem;
-  font-weight: 400;
-  color: var(--text-muted);
-  letter-spacing: 0;
-}
-
-.price-desc {
-  font-size: 0.82rem;
-  color: var(--text-sub);
-  margin-bottom: 24px;
-  line-height: 1.5;
-}
-
-.price-features {
-  list-style: none;
-  margin-bottom: 28px;
-}
-
-.price-features li {
-  font-size: 0.84rem;
-  color: var(--text-sub);
-  padding: 6px 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.price-features li::before {
-  content: '\2713';
-  color: var(--green);
-  font-weight: 700;
-  font-size: 0.8rem;
-}
-
-.price-btn {
-  display: block;
-  width: 100%;
-  padding: 11px 0;
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 600;
-  font-family: var(--font);
-  border-radius: 8px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.15s;
-  border: none;
-}
-
-.price-btn-outline {
-  background: var(--bg);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+.price-card { border: 1px solid var(--border); border-radius: 12px; padding: 32px 28px; position: relative; background: var(--bg); transition: box-shadow 0.2s; }
+.price-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+.price-card.featured { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue), 0 8px 24px rgba(59,130,246,0.08); }
+.price-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); padding: 3px 14px; background: var(--blue); color: #fff; border-radius: 100px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
+.price-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
+.price-amount { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 4px; }
+.price-amount span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0; }
+.price-desc { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 24px; line-height: 1.5; }
+.price-features { list-style: none; margin-bottom: 28px; }
+.price-features li { font-size: 0.84rem; color: var(--text-sub); padding: 6px 0; display: flex; align-items: center; gap: 10px; }
+.price-features li::before { content: '\2713'; color: var(--green); font-weight: 700; font-size: 0.8rem; }
+.price-btn { display: block; width: 100%; padding: 11px 0; text-align: center; font-size: 0.85rem; font-weight: 600; font-family: var(--font); border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.15s; border: none; }
+.price-btn-outline { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
 .price-btn-outline:hover { border-color: var(--blue); color: var(--blue); }
-
-.price-btn-fill {
-  background: var(--blue);
-  color: #fff;
-}
-
+.price-btn-fill { background: var(--blue); color: #fff; }
 .price-btn-fill:hover { background: var(--blue-dark); }
 
 /* ========== CTA ========== */
-.cta-section {
-  padding: 100px 24px;
-  background: var(--blue-light);
-  text-align: center;
-}
-
-.cta-inner {
-  max-width: 560px;
-  margin: 0 auto;
-}
-
-.cta-section h2 {
-  font-size: 2.4rem;
-  font-weight: 800;
-  letter-spacing: -1.5px;
-  color: var(--text);
-  margin-bottom: 16px;
-  line-height: 1.1;
-}
-
-.cta-section p {
-  font-size: 1.05rem;
-  font-weight: 300;
-  color: var(--text-sub);
-  line-height: 1.7;
-  margin-bottom: 36px;
-}
-
-.cta-btn {
-  padding: 14px 40px;
-  background: var(--blue);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  font-family: var(--font);
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.15s, transform 0.15s;
-}
-
+.cta-section { padding: 100px 24px; background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%); text-align: center; }
+.cta-inner { max-width: 560px; margin: 0 auto; }
+.cta-section h2 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; color: var(--text); margin-bottom: 16px; line-height: 1.1; }
+.cta-section p { font-size: 1.05rem; font-weight: 300; color: var(--text-sub); line-height: 1.7; margin-bottom: 36px; }
+.cta-btn { padding: 14px 40px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; font-family: var(--font); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s, transform 0.15s; }
 .cta-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
 
 /* ========== FOOTER ========== */
-footer {
-  border-top: 1px solid var(--border);
-  background: var(--bg-soft);
-  padding: 36px 32px;
-}
-
-.footer-inner {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.footer-left {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-}
-
-.footer-links {
-  display: flex;
-  gap: 24px;
-}
-
-.footer-links a {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
+footer { border-top: 1px solid var(--border); background: var(--bg-soft); padding: 36px 32px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.footer-left { font-size: 0.78rem; color: var(--text-muted); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 0.78rem; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
 .footer-links a:hover { color: var(--blue); }
 
-/* ========== SCROLL ANIMATIONS ========== */
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* ========== ANIMATIONS ========== */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
@@ -738,6 +222,8 @@ footer {
   .cta-section h2 { font-size: 1.9rem; }
   footer { padding: 28px 20px; }
   .footer-inner { flex-direction: column; gap: 16px; text-align: center; }
+  .compare-table { font-size: 0.75rem; }
+  .compare-table th, .compare-table td { padding: 10px 12px; }
 }
 
 @media (max-width: 480px) {
@@ -755,8 +241,9 @@ footer {
     <div class="nav-links">
       <a href="#how">How it works</a>
       <a href="#features">Features</a>
+      <a href="#compare">Compare</a>
       <a href="#pricing">Pricing</a>
-      <a href="https://app.deployme.socialbrain.co.kr" class="nav-cta" target="_blank">Dashboard</a>
+      <a href="https://app.deployme.socialbrain.co.kr" class="nav-cta">Dashboard</a>
     </div>
   </div>
 </nav>
@@ -764,13 +251,14 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-inner">
-    <div class="hero-badge"><span class="hero-badge-dot"></span> Now in public beta</div>
-    <h1>Push your code.<br><span class="accent">We handle the rest.</span></h1>
-    <p>Deploy any GitHub repository to production in seconds. No Docker, no CI/CD, no config files.</p>
+    <div class="hero-badge"><span class="hero-badge-dot"></span> 한국 최초 원클릭 배포 플랫폼</div>
+    <h1>GitHub URL<br><span class="accent">하나면 끝</span></h1>
+    <p>서버 설정, Docker, Nginx, SSL — 전부 잊으세요.<br>URL만 입력하면 30초 안에 라이브 서비스가 됩니다.</p>
     <div class="hero-btns">
-      <a href="https://app.deployme.socialbrain.co.kr" class="btn-primary" target="_blank">Start Deploying <span style="font-size:1.1em;">&rarr;</span></a>
-      <a href="#how" class="btn-secondary">How it works</a>
+      <a href="https://app.deployme.socialbrain.co.kr" class="btn-primary">무료로 시작하기 <span style="font-size:1.1em;">&rarr;</span></a>
+      <a href="#how" class="btn-secondary">어떻게 작동하나요?</a>
     </div>
+    <p class="hero-note">신용카드 불필요 &middot; 앱 2개 영구 무료</p>
   </div>
 </section>
 
@@ -778,9 +266,7 @@ footer {
 <section class="demo-section">
   <div class="demo-window reveal">
     <div class="demo-bar">
-      <div class="d-dot d-r"></div>
-      <div class="d-dot d-y"></div>
-      <div class="d-dot d-g"></div>
+      <div class="d-dot d-r"></div><div class="d-dot d-y"></div><div class="d-dot d-g"></div>
       <span class="demo-url">app.deployme.socialbrain.co.kr</span>
     </div>
     <div class="demo-body">
@@ -811,24 +297,24 @@ footer {
   <div class="steps-inner">
     <div class="steps-header reveal">
       <div class="section-label">How it works</div>
-      <div class="section-title">Three steps. That's it.</div>
-      <div class="section-desc">Go from repository to production in under a minute.</div>
+      <div class="section-title">3단계면 끝입니다</div>
+      <div class="section-desc">레포지토리에서 프로덕션까지 1분 이내.</div>
     </div>
     <div class="steps-grid">
       <div class="step-card reveal">
         <div class="step-num-ring">1</div>
-        <h3>Paste your repo URL</h3>
-        <p>Copy your GitHub repository link and paste it into Cloud5. Public or private repos both work.</p>
+        <h3>GitHub URL 입력</h3>
+        <p>GitHub 레포지토리 링크를 붙여넣으세요. Public과 Private 모두 지원합니다.</p>
       </div>
       <div class="step-card reveal">
         <div class="step-num-ring">2</div>
-        <h3>Automatic build</h3>
-        <p>Nixpacks detects your stack — Node, Python, Go, Ruby — and builds the right container.</p>
+        <h3>Deploy 클릭</h3>
+        <p>Nixpacks가 Node, Python, Go, Ruby 등 스택을 자동 감지하고 빌드합니다.</p>
       </div>
       <div class="step-card reveal">
         <div class="step-num-ring">3</div>
-        <h3>Live with a URL</h3>
-        <p>Your app is deployed with a public URL and HTTPS. Share it instantly, no DNS needed.</p>
+        <h3>라이브 URL 수령</h3>
+        <p>앱이 Public URL과 HTTPS로 배포됩니다. DNS 설정 없이 바로 공유하세요.</p>
       </div>
     </div>
   </div>
@@ -839,41 +325,114 @@ footer {
   <div class="features-inner">
     <div class="features-header reveal">
       <div class="section-label">Features</div>
-      <div class="section-title">Everything you need to ship.</div>
-      <div class="section-desc">Built for developers who want to deploy, not configure.</div>
+      <div class="section-title">배포에 필요한 모든 것</div>
+      <div class="section-desc">설정이 아닌 배포에 집중할 수 있도록 만들었습니다.</div>
     </div>
     <div class="feat-grid">
       <div class="feat-card reveal">
-        <div class="feat-icon">&#9889;</div>
-        <h4>One-click deploy</h4>
-        <p>Paste a GitHub URL, pick your branch, and hit deploy. That's the entire workflow.</p>
+        <div class="feat-icon">&#127472;&#127479;</div>
+        <h4>한국 리전 (AWS 서울)</h4>
+        <p>AWS ap-northeast-2에서 운영. 국내 사용자에게 최적의 응답 속도를 제공합니다.</p>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon">&#127760;</div>
-        <h4>Auto domain &amp; SSL</h4>
-        <p>Every app gets a live URL with HTTPS automatically. No DNS configuration required.</p>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-icon">&#128736;</div>
-        <h4>Zero-config builds</h4>
-        <p>Nixpacks auto-detects your stack and dependencies. Or use your own Dockerfile.</p>
+        <div class="feat-icon">&#129504;</div>
+        <h4>20+ 언어 자동 감지</h4>
+        <p>Node.js, Python, Go, Ruby, Java, Rust 등 Nixpacks가 자동으로 감지하고 빌드합니다.</p>
       </div>
       <div class="feat-card reveal">
         <div class="feat-icon">&#128274;</div>
-        <h4>Private repos</h4>
-        <p>Generate SSH keys and deploy from private GitHub repositories seamlessly.</p>
+        <h4>자동 HTTPS</h4>
+        <p>모든 앱에 Let's Encrypt SSL이 자동 적용됩니다. 별도 설정 불필요.</p>
+      </div>
+      <div class="feat-card reveal">
+        <div class="feat-icon">&#128176;</div>
+        <h4>무료로 시작</h4>
+        <p>앱 2개까지 영구 무료. 신용카드 없이 바로 시작하세요.</p>
       </div>
       <div class="feat-card reveal">
         <div class="feat-icon">&#128202;</div>
-        <h4>Monitoring &amp; alerts</h4>
-        <p>Track CPU, memory, and disk usage. Get notified when app status changes.</p>
+        <h4>모니터링 &amp; 알림</h4>
+        <p>CPU, 메모리, 디스크 사용량 실시간 추적. 앱 상태 변경 시 알림.</p>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon">&#128196;</div>
-        <h4>Real-time logs</h4>
-        <p>Stream build and runtime logs. Full deployment history at a glance.</p>
+        <div class="feat-icon">&#9889;</div>
+        <h4>Git Push 자동 배포</h4>
+        <p>GitHub Webhook 연동으로 git push만 하면 자동으로 재배포됩니다.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="compare-section" id="compare">
+  <div class="compare-inner">
+    <div class="compare-header reveal">
+      <div class="section-label">Comparison</div>
+      <div class="section-title">경쟁사와 비교</div>
+      <div class="section-desc" style="margin:0 auto;">Cloud5가 다른 PaaS와 어떻게 다른지 확인하세요.</div>
+    </div>
+    <table class="compare-table reveal">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="compare-highlight">Cloud5</th>
+          <th>Render</th>
+          <th>Railway</th>
+          <th>Vercel</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>한국 리전</td>
+          <td class="compare-highlight"><span class="check">&#10003;</span> 서울</td>
+          <td><span class="cross">&#10007;</span> 미국/유럽</td>
+          <td><span class="cross">&#10007;</span> 미국</td>
+          <td><span class="check">&#10003;</span> 서울 Edge</td>
+        </tr>
+        <tr>
+          <td>무료 플랜</td>
+          <td class="compare-highlight"><span class="check">&#10003;</span> 앱 2개</td>
+          <td><span class="check">&#10003;</span> 제한적</td>
+          <td><span class="cross">&#10007;</span> $5 크레딧</td>
+          <td><span class="check">&#10003;</span> 프론트만</td>
+        </tr>
+        <tr>
+          <td>백엔드 배포</td>
+          <td class="compare-highlight"><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10007;</span> Serverless만</td>
+        </tr>
+        <tr>
+          <td>자동 빌드 감지</td>
+          <td class="compare-highlight"><span class="check">&#10003;</span> Nixpacks</td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span> Nixpacks</td>
+          <td><span class="cross">&#10007;</span> Next.js 중심</td>
+        </tr>
+        <tr>
+          <td>자동 HTTPS</td>
+          <td class="compare-highlight"><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+        </tr>
+        <tr>
+          <td>Dockerfile 지원</td>
+          <td class="compare-highlight"><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="check">&#10003;</span></td>
+          <td><span class="cross">&#10007;</span></td>
+        </tr>
+        <tr>
+          <td>가격 (Pro)</td>
+          <td class="compare-highlight"><strong>$9/mo</strong></td>
+          <td>$19/mo</td>
+          <td>$5/mo + 사용량</td>
+          <td>$20/mo</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
@@ -882,48 +441,48 @@ footer {
   <div class="pricing-inner">
     <div class="pricing-header reveal">
       <div class="section-label">Pricing</div>
-      <div class="section-title">Start free, scale when ready.</div>
-      <div class="section-desc">No credit card required. Upgrade as your project grows.</div>
+      <div class="section-title">무료로 시작, 필요할 때 업그레이드</div>
+      <div class="section-desc" style="margin:0 auto;">신용카드 불필요. 프로젝트가 성장하면 업그레이드하세요.</div>
     </div>
     <div class="pricing-grid reveal">
       <div class="price-card">
         <div class="price-name">Free</div>
         <div class="price-amount">$0 <span>/mo</span></div>
-        <div class="price-desc">For personal projects and experiments.</div>
+        <div class="price-desc">개인 프로젝트와 실험용.</div>
         <ul class="price-features">
-          <li>2 apps</li>
-          <li>Public repositories</li>
-          <li>Auto deploy</li>
-          <li>Basic monitoring</li>
+          <li>앱 2개</li>
+          <li>Public 레포지토리</li>
+          <li>자동 배포</li>
+          <li>기본 모니터링</li>
         </ul>
-        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-outline" target="_blank">Get Started</a>
+        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-outline">시작하기</a>
       </div>
       <div class="price-card featured">
         <div class="price-badge">Most Popular</div>
         <div class="price-name">Pro</div>
         <div class="price-amount">$9 <span>/mo</span></div>
-        <div class="price-desc">For developers shipping to production.</div>
+        <div class="price-desc">프로덕션 배포를 위한 개발자용.</div>
         <ul class="price-features">
-          <li>10 apps</li>
-          <li>Private repositories</li>
-          <li>Custom domains</li>
-          <li>Email alerts</li>
-          <li>Priority support</li>
+          <li>앱 10개</li>
+          <li>Private 레포지토리</li>
+          <li>커스텀 도메인</li>
+          <li>이메일 알림</li>
+          <li>우선 지원</li>
         </ul>
-        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-fill" target="_blank">Upgrade to Pro</a>
+        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-fill">Pro 업그레이드</a>
       </div>
       <div class="price-card">
         <div class="price-name">Team</div>
         <div class="price-amount">$29 <span>/mo</span></div>
-        <div class="price-desc">For teams building together.</div>
+        <div class="price-desc">함께 개발하는 팀을 위해.</div>
         <ul class="price-features">
-          <li>Unlimited apps</li>
-          <li>5 team members</li>
-          <li>Role management</li>
-          <li>Advanced monitoring</li>
-          <li>Slack alerts</li>
+          <li>무제한 앱</li>
+          <li>팀원 5명</li>
+          <li>역할 관리</li>
+          <li>고급 모니터링</li>
+          <li>Slack 알림</li>
         </ul>
-        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-outline" target="_blank">Contact Us</a>
+        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-outline">문의하기</a>
       </div>
     </div>
   </div>
@@ -932,21 +491,21 @@ footer {
 <!-- CTA -->
 <section class="cta-section">
   <div class="cta-inner reveal">
-    <h2>Ready to deploy?</h2>
-    <p>Your code deserves to be live. Start deploying in under a minute — no credit card, no setup.</p>
-    <a href="https://app.deployme.socialbrain.co.kr" class="cta-btn" target="_blank">Open Dashboard <span style="font-size:1.1em;">&rarr;</span></a>
+    <h2>지금 시작하세요</h2>
+    <p>당신의 코드는 라이브될 자격이 있습니다.<br>1분 안에 배포를 시작하세요 — 신용카드도, 설정도 필요 없습니다.</p>
+    <a href="https://app.deployme.socialbrain.co.kr" class="cta-btn">대시보드 열기 <span style="font-size:1.1em;">&rarr;</span></a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-left">&copy; 2026 Cloud5. Built by Social Brain.</div>
+    <div class="footer-left">&copy; 2026 Cloud5. Built by MuseAI.</div>
     <div class="footer-links">
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="mailto:contact@socialbrain.co.kr">Contact</a>
-      <a href="https://app.deployme.socialbrain.co.kr" target="_blank">Dashboard</a>
+      <a href="https://app.deployme.socialbrain.co.kr">Dashboard</a>
     </div>
   </div>
 </footer>
