@@ -10,8 +10,8 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cloud5 — Deploy in seconds">
 <meta property="og:description" content="GitHub URL 하나면 끝. 한국 최초 원클릭 자동배포 플랫폼. 무료로 시작하세요.">
-<meta property="og:image" content="https://deployme.socialbrain.co.kr/og-image.png">
-<meta property="og:url" content="https://deployme.socialbrain.co.kr">
+<meta property="og:image" content="https://cloud5.socialbrain.co.kr/og-image.png">
+<meta property="og:url" content="https://cloud5.socialbrain.co.kr">
 <meta property="og:site_name" content="Cloud5">
 <meta property="og:locale" content="ko_KR">
 
@@ -19,7 +19,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Cloud5 — Deploy in seconds">
 <meta name="twitter:description" content="GitHub URL 하나면 끝. 한국 최초 원클릭 자동배포 플랫폼.">
-<meta name="twitter:image" content="https://deployme.socialbrain.co.kr/og-image.png">
+<meta name="twitter:image" content="https://cloud5.socialbrain.co.kr/og-image.png">
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -27,21 +27,21 @@
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
-  --bg: #ffffff;
-  --bg-soft: #f8fafc;
-  --bg-section: #f1f5f9;
+  --bg: #0a0a0f;
+  --bg-soft: #12121a;
+  --bg-section: #0e0e18;
   --blue: #3b82f6;
   --blue-dark: #2563eb;
-  --blue-light: #eff6ff;
-  --blue-subtle: #dbeafe;
+  --blue-light: rgba(59,130,246,0.1);
+  --blue-subtle: rgba(59,130,246,0.15);
   --green: #22c55e;
   --accent: #8b5cf6;
-  --text: #0f172a;
-  --text-secondary: #334155;
-  --text-sub: #64748b;
-  --text-muted: #94a3b8;
-  --border: #e2e8f0;
-  --border-light: #f1f5f9;
+  --text: #f0f0f5;
+  --text-secondary: #d0d0e0;
+  --text-sub: #8888a0;
+  --text-muted: #55556a;
+  --border: rgba(255,255,255,0.06);
+  --border-light: rgba(255,255,255,0.03);
   --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
@@ -61,63 +61,84 @@ nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   height: 60px; padding: 0 32px;
   display: flex; justify-content: space-between; align-items: center;
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(10,10,15,0.7);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
   border-bottom: 1px solid var(--border);
 }
 .nav-inner { max-width: 1100px; width: 100%; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
 .logo { font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: -0.3px; }
-.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); }
+.logo-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 10px rgba(59,130,246,0.5); }
 .nav-links { display: flex; align-items: center; gap: 6px; }
-.nav-links a { font-size: 0.82rem; font-weight: 400; color: var(--text-sub); text-decoration: none; padding: 6px 14px; border-radius: 6px; transition: color 0.15s, background 0.15s; }
-.nav-links a:hover { color: var(--text); background: var(--bg-soft); }
-.nav-cta { padding: 7px 18px !important; background: var(--blue) !important; color: #fff !important; font-weight: 500 !important; border-radius: 7px !important; transition: background 0.15s !important; }
-.nav-cta:hover { background: var(--blue-dark) !important; color: #fff !important; }
+.nav-links a { font-size: 0.82rem; font-weight: 400; color: var(--text-sub); text-decoration: none; padding: 6px 14px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+.nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+.nav-cta { padding: 7px 18px !important; background: linear-gradient(135deg, #3b82f6, #7c3aed) !important; color: #fff !important; font-weight: 500 !important; border-radius: 7px !important; transition: all 0.2s !important; box-shadow: 0 0 20px rgba(59,130,246,0.2); }
+.nav-cta:hover { box-shadow: 0 0 30px rgba(59,130,246,0.35) !important; transform: translateY(-1px); }
 
 /* ========== HERO ========== */
 .hero {
-  background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 50%, #fdf4ff 100%);
+  background: var(--bg);
   padding: 150px 24px 100px;
   text-align: center;
   position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 70% 20%, rgba(124,58,237,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 30% 30%, rgba(59,130,246,0.06) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 20%, transparent 70%);
 }
 .hero-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 5px 14px 5px 10px; background: var(--bg); border: 1px solid var(--blue-subtle);
+  padding: 5px 14px 5px 10px; background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.2);
   border-radius: 100px; font-size: 0.78rem; font-weight: 500; color: var(--blue); margin-bottom: 28px;
+  backdrop-filter: blur(8px);
 }
-.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); animation: pulse-dot 2s infinite; }
-@keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); animation: pulse-dot 2s infinite; box-shadow: 0 0 8px rgba(59,130,246,0.6); }
+@keyframes pulse-dot { 0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(59,130,246,0.6); } 50% { opacity: 0.4; box-shadow: 0 0 4px rgba(59,130,246,0.3); } }
 .hero h1 { font-size: 3.6rem; font-weight: 800; letter-spacing: -2px; line-height: 1.08; color: var(--text); margin-bottom: 20px; }
-.hero h1 .accent { background: linear-gradient(135deg, var(--blue), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero h1 .accent { background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .hero p { font-size: 1.12rem; font-weight: 300; color: var(--text-sub); line-height: 1.7; margin-bottom: 40px; max-width: 520px; margin-left: auto; margin-right: auto; }
 .hero-btns { display: flex; gap: 12px; justify-content: center; }
 .hero-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 16px; }
-.btn-primary { padding: 13px 32px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; font-family: var(--font); cursor: pointer; text-decoration: none; transition: background 0.15s, transform 0.15s; display: inline-flex; align-items: center; gap: 8px; }
-.btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
-.btn-secondary { padding: 13px 32px; background: var(--bg); color: var(--text-secondary); border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; font-weight: 500; font-family: var(--font); cursor: pointer; text-decoration: none; transition: border-color 0.15s, color 0.15s; display: inline-flex; align-items: center; gap: 8px; }
-.btn-secondary:hover { color: var(--blue); border-color: var(--blue); }
+.btn-primary { padding: 13px 32px; background: linear-gradient(135deg, #3b82f6, #7c3aed); color: #fff; border: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; font-family: var(--font); cursor: pointer; text-decoration: none; transition: all 0.2s cubic-bezier(0.4,0,0.2,1); display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 0 20px rgba(59,130,246,0.25); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(59,130,246,0.4); filter: brightness(1.1); }
+.btn-secondary { padding: 13px 32px; background: rgba(255,255,255,0.03); color: var(--text-secondary); border: 1px solid var(--border); border-radius: 8px; font-size: 0.9rem; font-weight: 500; font-family: var(--font); cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; backdrop-filter: blur(8px); }
+.btn-secondary:hover { color: var(--text); border-color: rgba(255,255,255,0.15); background: rgba(255,255,255,0.06); }
 
 /* ========== DEMO ========== */
-.demo-section { background: var(--bg); padding: 0 24px 100px; }
-.demo-window { max-width: 700px; margin: 0 auto; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg); box-shadow: 0 8px 32px rgba(0,0,0,0.06), 0 0 0 1px rgba(0,0,0,0.02); }
-.demo-bar { display: flex; align-items: center; gap: 7px; padding: 14px 18px; background: var(--bg-soft); border-bottom: 1px solid var(--border); }
+.demo-section { background: var(--bg); padding: 0 24px 100px; position: relative; }
+.demo-window { max-width: 700px; margin: 0 auto; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; background: rgba(18,18,26,0.8); box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 60px rgba(59,130,246,0.05); backdrop-filter: blur(12px); }
+.demo-bar { display: flex; align-items: center; gap: 7px; padding: 14px 18px; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--border); }
 .d-dot { width: 10px; height: 10px; border-radius: 50%; }
 .d-r { background: #ff5f57; } .d-y { background: #febc2e; } .d-g { background: #28c840; }
 .demo-url { margin-left: 16px; font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); }
 .demo-body { padding: 24px; }
 .demo-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
 .demo-logo { font-weight: 700; font-size: 0.95rem; color: var(--text); display: flex; align-items: center; gap: 7px; }
-.demo-logo-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
-.demo-deploy-btn { padding: 6px 16px; background: var(--blue); color: #fff; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
+.demo-logo-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px rgba(59,130,246,0.5); }
+.demo-deploy-btn { padding: 6px 16px; background: linear-gradient(135deg, #3b82f6, #7c3aed); color: #fff; border-radius: 6px; font-size: 0.75rem; font-weight: 600; }
 .demo-list { display: flex; flex-direction: column; gap: 8px; }
-.demo-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.15s; }
-.demo-item:hover { border-color: #cbd5e1; }
+.demo-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+.demo-item:hover { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); }
 .demo-name { font-weight: 500; font-size: 0.85rem; color: var(--blue); }
 .demo-id { font-family: var(--mono); font-size: 0.68rem; color: var(--text-muted); margin-top: 3px; }
 .demo-status { font-size: 0.75rem; font-weight: 500; color: var(--green); display: flex; align-items: center; gap: 6px; }
-.demo-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.demo-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px rgba(34,197,94,0.5); }
 
 /* ========== SECTION SHARED ========== */
 .section-label { font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--blue); margin-bottom: 12px; }
@@ -125,14 +146,16 @@ nav {
 .section-desc { font-size: 1rem; font-weight: 300; color: var(--text-sub); line-height: 1.7; max-width: 520px; }
 
 /* ========== STEPS ========== */
-.steps-section { padding: 100px 24px; background: var(--bg-section); }
-.steps-inner { max-width: 960px; margin: 0 auto; }
+.steps-section { padding: 100px 24px; background: var(--bg-section); position: relative; }
+.steps-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(59,130,246,0.04) 0%, transparent 60%); pointer-events: none; }
+.steps-inner { max-width: 960px; margin: 0 auto; position: relative; }
 .steps-header { text-align: center; margin-bottom: 60px; }
 .steps-header .section-desc { margin: 0 auto; }
 .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.step-card { text-align: center; padding: 32px 24px; background: var(--bg); border: 1px solid var(--border); border-radius: 12px; }
-.step-num-ring { width: 48px; height: 48px; border-radius: 12px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 700; color: var(--blue); margin: 0 auto 18px; }
-.step-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.3px; }
+.step-card { text-align: center; padding: 32px 24px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+.step-card:hover { border-color: rgba(59,130,246,0.2); box-shadow: 0 0 30px rgba(59,130,246,0.06); transform: translateY(-2px); }
+.step-num-ring { width: 48px; height: 48px; border-radius: 12px; background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(124,58,237,0.15)); display: flex; align-items: center; justify-content: center; font-size: 1.05rem; font-weight: 700; color: var(--blue); margin: 0 auto 18px; border: 1px solid rgba(59,130,246,0.2); }
+.step-card h3 { font-size: 0.95rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.3px; color: var(--text); }
 .step-card p { font-size: 0.85rem; font-weight: 300; color: var(--text-sub); line-height: 1.6; }
 
 /* ========== FEATURES ========== */
@@ -141,10 +164,11 @@ nav {
 .features-header { text-align: center; margin-bottom: 60px; }
 .features-header .section-desc { margin: 0 auto; }
 .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.feat-card { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; transition: border-color 0.2s, box-shadow 0.2s; }
-.feat-card:hover { border-color: #cbd5e1; box-shadow: 0 4px 12px rgba(0,0,0,0.04); }
-.feat-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--blue-light); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 16px; }
-.feat-card h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.2px; }
+.feat-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 28px 24px; transition: all 0.3s cubic-bezier(0.4,0,0.2,1); }
+.feat-card:hover { border-color: rgba(59,130,246,0.15); box-shadow: 0 0 30px rgba(59,130,246,0.05); transform: translateY(-2px); }
+.feat-icon { width: 40px; height: 40px; border-radius: 10px; background: linear-gradient(135deg, rgba(59,130,246,0.12), rgba(124,58,237,0.12)); display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 16px; border: 1px solid rgba(59,130,246,0.15); }
+.feat-icon svg { width: 20px; height: 20px; }
+.feat-card h4 { font-size: 0.92rem; font-weight: 600; margin-bottom: 8px; letter-spacing: -0.2px; color: var(--text); }
 .feat-card p { font-size: 0.84rem; font-weight: 300; color: var(--text-sub); line-height: 1.6; }
 
 /* ========== COMPARISON ========== */
@@ -152,14 +176,14 @@ nav {
 .compare-inner { max-width: 800px; margin: 0 auto; }
 .compare-header { text-align: center; margin-bottom: 60px; }
 .compare-header .section-desc { margin: 0 auto; }
-.compare-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: var(--bg); }
-.compare-table th { background: var(--bg-soft); font-size: 0.82rem; font-weight: 600; color: var(--text); padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); }
-.compare-table td { font-size: 0.82rem; color: var(--text-secondary); padding: 12px 18px; border-bottom: 1px solid var(--border-light); }
+.compare-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.02); }
+.compare-table th { background: rgba(255,255,255,0.03); font-size: 0.82rem; font-weight: 600; color: var(--text); padding: 14px 18px; text-align: left; border-bottom: 1px solid var(--border); }
+.compare-table td { font-size: 0.82rem; color: var(--text-secondary); padding: 12px 18px; border-bottom: 1px solid var(--border); }
 .compare-table tr:last-child td { border-bottom: none; }
 .compare-table td:first-child { font-weight: 500; color: var(--text); }
-.compare-highlight { background: var(--blue-light); }
-.compare-highlight th { background: var(--blue-subtle); color: var(--blue-dark); }
-.check { color: var(--green); font-weight: 700; }
+.compare-highlight { background: rgba(59,130,246,0.06); }
+.compare-highlight th { background: rgba(59,130,246,0.1); color: var(--blue); }
+.check { color: var(--green); font-weight: 700; text-shadow: 0 0 8px rgba(34,197,94,0.4); }
 .cross { color: var(--text-muted); }
 
 /* ========== PRICING ========== */
@@ -168,42 +192,44 @@ nav {
 .pricing-header { text-align: center; margin-bottom: 60px; }
 .pricing-header .section-desc { margin: 0 auto; }
 .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
-.price-card { border: 1px solid var(--border); border-radius: 12px; padding: 32px 28px; position: relative; background: var(--bg); transition: box-shadow 0.2s; }
-.price-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-.price-card.featured { border-color: var(--blue); box-shadow: 0 0 0 1px var(--blue), 0 8px 24px rgba(59,130,246,0.08); }
-.price-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); padding: 3px 14px; background: var(--blue); color: #fff; border-radius: 100px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; }
-.price-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; }
-.price-amount { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 4px; }
-.price-amount span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0; }
+.price-card { border: 1px solid var(--border); border-radius: 12px; padding: 32px 28px; position: relative; background: rgba(255,255,255,0.02); transition: all 0.3s; }
+.price-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.1); }
+.price-card.featured { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.04); box-shadow: 0 0 40px rgba(59,130,246,0.1), 0 8px 32px rgba(0,0,0,0.3); }
+.price-badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); padding: 3px 14px; background: linear-gradient(135deg, #3b82f6, #7c3aed); color: #fff; border-radius: 100px; font-size: 0.72rem; font-weight: 600; white-space: nowrap; box-shadow: 0 0 15px rgba(59,130,246,0.3); }
+.price-name { font-size: 0.9rem; font-weight: 600; margin-bottom: 4px; color: var(--text); }
+.price-amount { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 4px; color: var(--text); }
+.featured .price-amount { background: linear-gradient(135deg, #3b82f6, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.price-amount span { font-size: 0.9rem; font-weight: 400; color: var(--text-muted); letter-spacing: 0; -webkit-text-fill-color: var(--text-muted); }
 .price-desc { font-size: 0.82rem; color: var(--text-sub); margin-bottom: 24px; line-height: 1.5; }
 .price-features { list-style: none; margin-bottom: 28px; }
 .price-features li { font-size: 0.84rem; color: var(--text-sub); padding: 6px 0; display: flex; align-items: center; gap: 10px; }
-.price-features li::before { content: '\2713'; color: var(--green); font-weight: 700; font-size: 0.8rem; }
-.price-btn { display: block; width: 100%; padding: 11px 0; text-align: center; font-size: 0.85rem; font-weight: 600; font-family: var(--font); border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.15s; border: none; }
-.price-btn-outline { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
-.price-btn-outline:hover { border-color: var(--blue); color: var(--blue); }
-.price-btn-fill { background: var(--blue); color: #fff; }
-.price-btn-fill:hover { background: var(--blue-dark); }
+.price-features li::before { content: '\2713'; color: var(--green); font-weight: 700; font-size: 0.8rem; text-shadow: 0 0 6px rgba(34,197,94,0.4); }
+.price-btn { display: block; width: 100%; padding: 11px 0; text-align: center; font-size: 0.85rem; font-weight: 600; font-family: var(--font); border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; border: none; }
+.price-btn-outline { background: rgba(255,255,255,0.03); color: var(--text); border: 1px solid var(--border); }
+.price-btn-outline:hover { border-color: rgba(59,130,246,0.4); color: var(--blue); background: rgba(59,130,246,0.05); }
+.price-btn-fill { background: linear-gradient(135deg, #3b82f6, #7c3aed); color: #fff; box-shadow: 0 0 20px rgba(59,130,246,0.2); }
+.price-btn-fill:hover { box-shadow: 0 0 30px rgba(59,130,246,0.35); filter: brightness(1.1); transform: translateY(-1px); }
 
 /* ========== CTA ========== */
-.cta-section { padding: 100px 24px; background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%); text-align: center; }
-.cta-inner { max-width: 560px; margin: 0 auto; }
-.cta-section h2 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; color: var(--text); margin-bottom: 16px; line-height: 1.1; }
+.cta-section { padding: 100px 24px; background: var(--bg-section); text-align: center; position: relative; overflow: hidden; }
+.cta-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(59,130,246,0.08) 0%, transparent 60%), radial-gradient(ellipse 50% 40% at 60% 60%, rgba(124,58,237,0.06) 0%, transparent 50%); pointer-events: none; }
+.cta-inner { max-width: 560px; margin: 0 auto; position: relative; z-index: 1; }
+.cta-section h2 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.1; background: linear-gradient(135deg, var(--text) 0%, #c0c0d0 50%, var(--blue) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 .cta-section p { font-size: 1.05rem; font-weight: 300; color: var(--text-sub); line-height: 1.7; margin-bottom: 36px; }
-.cta-btn { padding: 14px 40px; background: var(--blue); color: #fff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; font-family: var(--font); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: background 0.15s, transform 0.15s; }
-.cta-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+.cta-btn { padding: 14px 40px; background: linear-gradient(135deg, #3b82f6, #7c3aed); color: #fff; border: none; border-radius: 8px; font-size: 0.95rem; font-weight: 600; font-family: var(--font); cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; box-shadow: 0 0 25px rgba(59,130,246,0.25); }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 0 40px rgba(59,130,246,0.4); filter: brightness(1.1); }
 
 /* ========== FOOTER ========== */
 footer { border-top: 1px solid var(--border); background: var(--bg-soft); padding: 36px 32px; }
 .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
 .footer-left { font-size: 0.78rem; color: var(--text-muted); }
 .footer-links { display: flex; gap: 24px; }
-.footer-links a { font-size: 0.78rem; color: var(--text-muted); text-decoration: none; transition: color 0.15s; }
+.footer-links a { font-size: 0.78rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
 .footer-links a:hover { color: var(--blue); }
 
 /* ========== ANIMATIONS ========== */
-.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease, filter 0.6s ease; filter: blur(4px); }
+.reveal.visible { opacity: 1; transform: translateY(0); filter: blur(0); }
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 768px) {
@@ -243,7 +269,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
       <a href="#features">Features</a>
       <a href="#compare">Compare</a>
       <a href="#pricing">Pricing</a>
-      <a href="https://app.deployme.socialbrain.co.kr" class="nav-cta">Dashboard</a>
+      <a href="https://app.cloud5.socialbrain.co.kr" class="nav-cta">Dashboard</a>
     </div>
   </div>
 </nav>
@@ -255,7 +281,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
     <h1>GitHub URL<br><span class="accent">하나면 끝</span></h1>
     <p>서버 설정, Docker, Nginx, SSL — 전부 잊으세요.<br>URL만 입력하면 30초 안에 라이브 서비스가 됩니다.</p>
     <div class="hero-btns">
-      <a href="https://app.deployme.socialbrain.co.kr" class="btn-primary">무료로 시작하기 <span style="font-size:1.1em;">&rarr;</span></a>
+      <a href="https://app.cloud5.socialbrain.co.kr" class="btn-primary">무료로 시작하기 <span style="font-size:1.1em;">&rarr;</span></a>
       <a href="#how" class="btn-secondary">어떻게 작동하나요?</a>
     </div>
     <p class="hero-note">신용카드 불필요 &middot; 앱 2개 영구 무료</p>
@@ -267,7 +293,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
   <div class="demo-window reveal">
     <div class="demo-bar">
       <div class="d-dot d-r"></div><div class="d-dot d-y"></div><div class="d-dot d-g"></div>
-      <span class="demo-url">app.deployme.socialbrain.co.kr</span>
+      <span class="demo-url">app.cloud5.socialbrain.co.kr</span>
     </div>
     <div class="demo-body">
       <div class="demo-head">
@@ -330,32 +356,32 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
     </div>
     <div class="feat-grid">
       <div class="feat-card reveal">
-        <div class="feat-icon">&#127472;&#127479;</div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
         <h4>한국 리전 (AWS 서울)</h4>
         <p>AWS ap-northeast-2에서 운영. 국내 사용자에게 최적의 응답 속도를 제공합니다.</p>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon">&#129504;</div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/><line x1="14" y1="4" x2="10" y2="20"/></svg></div>
         <h4>20+ 언어 자동 감지</h4>
         <p>Node.js, Python, Go, Ruby, Java, Rust 등 Nixpacks가 자동으로 감지하고 빌드합니다.</p>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon">&#128274;</div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
         <h4>자동 HTTPS</h4>
         <p>모든 앱에 Let's Encrypt SSL이 자동 적용됩니다. 별도 설정 불필요.</p>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon">&#128176;</div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
         <h4>무료로 시작</h4>
         <p>앱 2개까지 영구 무료. 신용카드 없이 바로 시작하세요.</p>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon">&#128202;</div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
         <h4>모니터링 &amp; 알림</h4>
         <p>CPU, 메모리, 디스크 사용량 실시간 추적. 앱 상태 변경 시 알림.</p>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-icon">&#9889;</div>
+        <div class="feat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <h4>Git Push 자동 배포</h4>
         <p>GitHub Webhook 연동으로 git push만 하면 자동으로 재배포됩니다.</p>
       </div>
@@ -455,7 +481,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
           <li>자동 배포</li>
           <li>기본 모니터링</li>
         </ul>
-        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-outline">시작하기</a>
+        <a href="https://app.cloud5.socialbrain.co.kr" class="price-btn price-btn-outline">시작하기</a>
       </div>
       <div class="price-card featured">
         <div class="price-badge">Most Popular</div>
@@ -469,7 +495,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
           <li>이메일 알림</li>
           <li>우선 지원</li>
         </ul>
-        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-fill">Pro 업그레이드</a>
+        <a href="https://app.cloud5.socialbrain.co.kr" class="price-btn price-btn-fill">Pro 업그레이드</a>
       </div>
       <div class="price-card">
         <div class="price-name">Team</div>
@@ -482,7 +508,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
           <li>고급 모니터링</li>
           <li>Slack 알림</li>
         </ul>
-        <a href="https://app.deployme.socialbrain.co.kr" class="price-btn price-btn-outline">문의하기</a>
+        <a href="https://app.cloud5.socialbrain.co.kr" class="price-btn price-btn-outline">문의하기</a>
       </div>
     </div>
   </div>
@@ -493,7 +519,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
   <div class="cta-inner reveal">
     <h2>지금 시작하세요</h2>
     <p>당신의 코드는 라이브될 자격이 있습니다.<br>1분 안에 배포를 시작하세요 — 신용카드도, 설정도 필요 없습니다.</p>
-    <a href="https://app.deployme.socialbrain.co.kr" class="cta-btn">대시보드 열기 <span style="font-size:1.1em;">&rarr;</span></a>
+    <a href="https://app.cloud5.socialbrain.co.kr" class="cta-btn">대시보드 열기 <span style="font-size:1.1em;">&rarr;</span></a>
   </div>
 </section>
 
@@ -505,7 +531,7 @@ footer { border-top: 1px solid var(--border); background: var(--bg-soft); paddin
       <a href="terms.html">Terms</a>
       <a href="privacy.html">Privacy</a>
       <a href="mailto:contact@socialbrain.co.kr">Contact</a>
-      <a href="https://app.deployme.socialbrain.co.kr">Dashboard</a>
+      <a href="https://app.cloud5.socialbrain.co.kr">Dashboard</a>
     </div>
   </div>
 </footer>
